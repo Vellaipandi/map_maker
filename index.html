@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="utf-8" />
+    <title>Map Animation</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" rel="stylesheet" />
+    <link href="./styles.css" rel="stylesheet" />
+    <style>
+        body {
+  margin: 0;
+  padding: 0;
+}
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+
+.map-overlay {
+  position: absolute;
+  left: 0;
+  padding: 10px;
+}
+    </style>
+</head>
+
+
+<body>
+    <div id="map"></div>
+    <div class="map-overlay top">
+        <button style="font-size: 2em" onclick="move()">
+            Show stops between Sulur and Gandhipuram
+        </button>
+    </div>
+    <script src="./mapanimation.js"></script>
+    <script>
+        // This array contains the coordinates for all bus stops between MIT and Harvard
+const busStops = [
+  [77.13318610861624,11.028268595890365],
+  [77.10369953346678,11.022197525415407],
+  [77.09521783931315,11.018804156471209],
+  [77.07989724108208,11.009941195713203],
+  [77.03135994575219,11.000240334958535],
+  [77.0189551357533,11.025988172087844],
+  [76.98571062491196,11.013841483667726],
+  [76.98246892751567,11.010564458638855],
+  [76.97225465480066,11.004361863536111],
+  [76.9668805521577,11.00789919228425],
+  [76.96692998696757,11.008853275220835],
+  [76.96731134789128,11.009393025116147],
+];
+
+
+// TODO: add your own access token
+mapboxgl.accessToken = 'pk.eyJ1Ijoic2VudGhpbGt1cHB1c3dhbXkiLCJhIjoiY2twbTlkMzBlMDQxYjJ2bXcwcG5xdnhzNCJ9.mmPcPQN_3raRRh8Q0S1kEw';
+
+
+// This is the map instance
+let map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v11',
+  center: [77.13348710326792,11.027957803201364],
+  zoom: 14,}
+);
+
+
+// TODO: add a marker to the map at the first coordinates in the array busStops. The marker variable should be named "marker"
+var marker= new mapboxgl.Marker()
+            .setLngLat([77.13348710326792,11.0279557803201364])
+            .addTo(map);
+// counter here represents the index of the current bus stop
+let counter = 0;
+function move() {
+  // TODO: move the marker on the map every 1000ms. Use the function marker.setLngLat() to update the marker coordinates
+  // Use counter to access bus stops in the array busStops
+  // Make sure you call move() after you increment the counter.
+  setTimeout(()=> {
+    if (counter>=busStops.length) return;
+    marker.setLngLat(busStops[counter]);
+    counter++;
+    move();
+    },1000);
+}
+
+
+// Do not edit code past this point
+if (typeof module !== 'undefined') {
+  module.exports = { move };
+}
+
+    </script>
+</body>
+
+
+</html>
